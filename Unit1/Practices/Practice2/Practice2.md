@@ -17,8 +17,10 @@ val lista5 = "perla" :: lista4
 
 ## Exercise 3
 Add the elements of "lista", “verde”, “amarillo”, “azul”
+
 lista5 slice (3, 6)
 
 ## Exercise 4
 Create an array of range of 1 to 1000 with steps of 5 on 5
+
 val arr = 1 to 1000 by 5
