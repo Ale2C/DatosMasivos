@@ -1,8 +1,4 @@
-# Practice #1
-
-## Exercise 1
-Algorit that caulculates the radius of a circle
-
+// 1.- Use an algorit to calculate the radius of a circle
 var radio: Double = 0;
 
 def radioperimetro (perimetro:Double): Unit = {
@@ -10,9 +6,8 @@ def radioperimetro (perimetro:Double): Unit = {
     println(s"El radio del circulo es de: $radio%");
 }
 
-## Exercise 2
-Use an Algorit to know if a number is prime or not
 
+// 2.- Use an algorit to know if a number is prime or not
 def isPrime(num:Int): Boolean = {
     for(n <- Range(2, num)){
         if(num%n == 0){
@@ -25,8 +20,7 @@ def isPrime(num:Int): Boolean = {
 isPrime(4)
 isPrime(7)
 
-## Exercise 3
-Use interpolation to make the variable bird = "tweet" to show "Im writing a tweet"
 
+// 3.- Use interpolation to make the variable bird = "tweet" to show "Im writing a tweet"
 val bird = "tweet";
 println(s"Estoy escribiendo un $bird")
