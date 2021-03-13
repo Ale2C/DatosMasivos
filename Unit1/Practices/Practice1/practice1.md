@@ -30,3 +30,8 @@ Use interpolation to make the variable bird = "tweet" to show "Im writing a twee
 
 val bird = "tweet";
 println(s"Estoy escribiendo un $bird")
+
+## Exercise 4
+Use slice to show part of String
+`val menssage = ("Hello Luke, Im your father!")
+menssage.slice(5,10)`
