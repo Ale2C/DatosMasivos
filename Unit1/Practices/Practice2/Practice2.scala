@@ -19,3 +19,17 @@ lista5 slice (3, 6)
 //4.- Create an array of range of 1 to 1000 with steps of 5 on 5
 
 val arr = 1 to 1000 by 5
+
+// 5.- What are the unique elements of the list List (1,3,3,4,6,7,3,7) use conversion to sets
+
+val list = List (1,3,3,4,6,7,3,7)
+
+list.toSet
+
+// 6.- Create a mutable map named names that contains the following "Jose", 20, "Luis", 24, "Ana", 23, "Susana", "27"
+val map = collection.mutable.Map( ("Jose",20), ("Luis", 24), ("Ana", 23), ("Susana", "27") )
+
+// 6a.- Print all the keys from map
+map.keys
+// 7b.- Add the following value to the map ("Miguel", 23)
+map += ("Miguel" -> 23)
