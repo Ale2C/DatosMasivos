@@ -24,3 +24,15 @@ isPrime(7)
 // 3.- Use interpolation to make the variable bird = "tweet" to show "Im writing a tweet"
 val bird = "tweet";
 println(s"Estoy escribiendo un $bird")
+
+// 4.- Exercise 4 Use slice to show part of String
+
+val menssage = ("Hello Luke, I'm your father!")
+menssage.slice(5,10)
+
+//Exercise 5 What is the difference between value and a variable in scala?
+ // val are constant which means that we cannot modify its value, while var if we can modify its value throughout the program
+
+// Exerce 6 Given the tuple (2,4,5,1,2,3,3.1416,23) returns the number 3.1416
+val tupla = (2,4,5,1,2,3,3.1416,23)
+tupla._7
