@@ -42,7 +42,7 @@ Use slice to show part of String
 What is the difference between value and a variable in scala?
 - **val** are constant which means that we cannot modify its value, while **var** if we can modify its value throughout the program
 
-## Exerce 6  
+## Exercise 6  
 Given the tuple (2,4,5,1,2,3,3.1416,23) returns the number 3.1416
 
 `val tupla = (2,4,5,1,2,3,3.1416,23)`
