@@ -25,6 +25,7 @@ I
 **ALUMNO Y NO. DE CONTROL**
 
 Reyes Armenta Gerardo Antonio 17211147
+Castro Cebreros Alejandro 16211341
 
 **MAESTRO**
 Christian Romero Hernandez
