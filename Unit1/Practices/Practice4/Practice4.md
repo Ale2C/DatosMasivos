@@ -1,4 +1,5 @@
-## Practice 4, analyse the following code with your own words
+## Practice 4 
+## Analyse the following code with your own words
 
 ## Code 1
 <div align="Justify">
@@ -60,6 +61,7 @@ println(afortunado(af))
 
 ## Code 3
 
+``` scala
 def balance(list:List[Int]): Boolean={
     var primera = 0
     var segunda = 0
@@ -76,27 +78,36 @@ def balance(list:List[Int]): Boolean={
     }
     return false 
 }
+``` 
 
-
+``` scala
 val bl = List(3,2,1)
 val bl2 = List(2,3,3,2)
 val bl3 = List(10,30,90)
+``` 
 
+``` scala
 balance(bl)
 balance(bl2)
 balance(bl3)
-
+``` 
 
 ## Code 4
 
+``` scala
 def palindromo(palabra:String):Boolean ={
     return (palabra == palabra.reverse)
 }
+```
 
+``` scala
 val palabra = "OSO"
 val palabra2 = "ANNA"
 val palabra3 = "JUAN"
+``` 
 
+``` scala
 println(palindromo(palabra))
 println(palindromo(palabra2))
 println(palindromo(palabra3))
+``` 
