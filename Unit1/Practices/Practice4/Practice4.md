@@ -67,8 +67,8 @@ Declare a pair of variables "primera" and "segunda", the latter is assigned the 
 There is a for loop which is repeated from i = 0 to the length of the list, the "primera" variable is assigned its value plus the value of the list in position i and the "segunda" is assigned its minus value the value of the list in position i.
 
 If "primera" equals "segunda" then it returns a true. If not, until the cycle is finished, a flash will return.
-
 </div>
+
 ``` scala
 def balance(list:List[Int]): Boolean={
     var primera = 0
