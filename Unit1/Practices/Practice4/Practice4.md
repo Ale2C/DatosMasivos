@@ -60,7 +60,15 @@ println(afortunado(af))
 ``` 
 
 ## Code 3
+<div align="Justify">
+This is a function named "balance" which returns a list of integers and returns a Boolean.
+Declare a pair of variables "primera" and "segunda", the latter is assigned the value of the sum of the list.
 
+There is a for loop which is repeated from i = 0 to the length of the list, the "primera" variable is assigned its value plus the value of the list in position i and the "segunda" is assigned its minus value the value of the list in position i.
+
+If "primera" equals "segunda" then it returns a true. If not, until the cycle is finished, a flash will return.
+
+</div>
 ``` scala
 def balance(list:List[Int]): Boolean={
     var primera = 0
@@ -80,12 +88,17 @@ def balance(list:List[Int]): Boolean={
 }
 ``` 
 
+<div aling = "Justify">
+Here only the three lists are declared
+</div>
 ``` scala
 val bl = List(3,2,1)
 val bl2 = List(2,3,3,2)
 val bl3 = List(10,30,90)
 ``` 
-
+<div aling = "Justify">
+Here the "balance" function is applied to each of the lists
+</div>
 ``` scala
 balance(bl)
 balance(bl2)
@@ -93,21 +106,25 @@ balance(bl3)
 ``` 
 
 ## Code 4
+<div align= "Justify">
+We have a function called "palindromo" which returns a value called "palabra" which is a string, this function will return a boolean.
+It will only return true if the String is written the same from left to right as from left to right.
 
 ``` scala
 def palindromo(palabra:String):Boolean ={
     return (palabra == palabra.reverse)
 }
 ```
-
+The three words "OSO" "ANNA" and "JUAN" are declared.
 ``` scala
 val palabra = "OSO"
 val palabra2 = "ANNA"
 val palabra3 = "JUAN"
 ``` 
-
+The value of the function is printed depending on the one of the "words" that is inserted.
 ``` scala
 println(palindromo(palabra))
 println(palindromo(palabra2))
 println(palindromo(palabra3))
 ``` 
+</div>
