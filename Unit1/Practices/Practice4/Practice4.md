@@ -91,15 +91,16 @@ def balance(list:List[Int]): Boolean={
 <div aling = "Justify">
 Here only the three lists are declared
 </div>
+
 ``` scala
 val bl = List(3,2,1)
 val bl2 = List(2,3,3,2)
 val bl3 = List(10,30,90)
 ``` 
-<div aling = "Justify">
+
 Here the "balance" function is applied to each of the lists
-</div>
-``` scala
+ 
+```scala
 balance(bl)
 balance(bl2)
 balance(bl3)
