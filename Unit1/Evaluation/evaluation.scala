@@ -10,3 +10,6 @@ val df = spark.read.option("header", "true").option("inferSchema","true")csv("Ne
 // 3- What are the column names?
 scala> df.columns
 
+// 4- How is the scheme?
+df.printSchema
+
