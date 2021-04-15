@@ -198,16 +198,6 @@ df.select(min("Volume")).show()
 ```
 ## 11.- With Scala / Spark $ syntax answer the following: 
 
-<<<<<<< HEAD
-a. ¿Cuántos días fue la columna “Close” inferior a $ 600?
-``` scala
-val dias = df.filter($"Close" < 600).count()
-
-## Terminal 
-dias: Long = 1218
-```
-
-=======
 a. How many days was the “Close” column less than $ 600?
 ``` scala
 val dias = df.filter($"Close" < 600).count() 
@@ -297,4 +287,4 @@ scala> df3.select($"Month", $"avg(Close)").show()
 |    2| 254.1954634020619|
 +-----+------------------+
 ```
->>>>>>> ace26828715e6d7c39154fc8aac13049f1333be1
+
