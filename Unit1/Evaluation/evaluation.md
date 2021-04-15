@@ -8,18 +8,16 @@ Using SparkSession and get0rCreate will help create a session on spark
 
 ``` scala 
 import org.apache.spark.sql.SparkSession
-```
 
-``` scala
 ## Terminal
 spark: import org.apache.spark.sql.SparkSession
 ```
 
-``` scala 
-val spark = SparkSession.builder().getOrCreate()
-```
+
 
 ``` scala 
+val spark = SparkSession.builder().getOrCreate()
+
 ## Terminal
 spark: org.apache.spark.sql.SparkSession = org.apache.spark.sql.SparkSession@1013aa94
 ```
