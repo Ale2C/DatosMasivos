@@ -16,3 +16,5 @@ df.printSchema
 // 5.- Print the first 5 columns.
 df.head(5)
 
+// 6.- Use describe () to learn about the DataFrama.
+df.describe().show
