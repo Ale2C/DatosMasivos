@@ -34,3 +34,15 @@ val df = spark.read.option("header", "true").option("inferSchema","true")csv("Ne
 ## Terminal
 df: org.apache.spark.sql.DataFrame = [Date: timestamp, Open: double ... 5 more fields] 
 ```
+
+## 3- What are the column names?
+<div align="Justify">
+There are 7 columns, Date, Open, High, Low, Close, Volume, Adj Close
+</div>
+
+``` scala
+df.columns
+
+## Terminal
+res0: Array[String] = Array(Date, Open, High, Low, Close, Volume, Adj Close)
+``` 
