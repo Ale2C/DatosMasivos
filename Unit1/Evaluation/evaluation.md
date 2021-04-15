@@ -103,5 +103,48 @@ df.describe().show
 ``` 
 
 
+##  7.- Create a new dataframe with a new column called "HV Ratio" what is the relationship between the price of the column "High" versus the "Volume" column of shares traded for a day (Hint: It is a column operation)
+<div align="Justify">
+First create the dataframe df2 from the dataframa df and the calculate the ratio of HIGH and Volume with a division 
+</div>
+``` scala
+val df2 = df.withColumn("HV Ratio",df("High")/df("Volume"))
+``` 
+
+
+<div align="Justify">
+Now that we have a new dataframe, we use the function select and type the column HIGH, VOLUME and HV RATIO, so we can see the columns that are needed
+</div>
+``` scala
+df2.select("HIGH","VOLUME","HV RATIO").show()
+``` 
+
+``` scala
+## Terminal
++------------------+---------+--------------------+
+|              HIGH|   VOLUME|            HV RATIO|
++------------------+---------+--------------------+
+|120.28000300000001|120460200|9.985040951285156E-7|
+|         79.390001|315541800|2.515989989281927E-7|
+|         81.420001|148733900|5.474206014903126E-7|
+| 82.71999699999999| 71190000|1.161960907430818...|
+|         84.660002| 57769600|1.465476686700271...|
+|         84.090002| 39653600|2.120614572195210...|
+|         80.999998| 33016200|2.453341026526372E-6|
+|         84.400002| 41384000|2.039435578967717E-6|
+|         92.600003| 94685500| 9.77974483949496E-7|
+| 92.89000300000001| 84483700|1.099502069629999...|
+|         93.839998| 47485200|1.976194645910725...|
+|         92.600003| 31906000|2.902275528113834...|
+|         90.440001| 28756000|3.145082800111281E-6|
+| 90.29999699999999| 39614400|2.279474054889131E-6|
+|         87.949997| 38140200|2.305965805108520...|
+|              88.1| 21811300|4.039190694731629...|
+|         87.050003| 21372400|4.073010190713256...|
+|         86.460003| 34560400|2.501707242971725E-6|
+|         80.999998| 52823400|1.533411291208063...|
+|         78.999999| 34729100|2.274749388841058...|
++------------------+---------+--------------------+
+``` 
 
 
