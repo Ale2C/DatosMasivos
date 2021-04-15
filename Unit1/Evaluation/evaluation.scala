@@ -7,3 +7,6 @@ val spark = SparkSession.builder().getOrCreate()
 
 val df = spark.read.option("header", "true").option("inferSchema","true")csv("Netflix_2011_2016.csv")
 
+// 3- What are the column names?
+scala> df.columns
+
