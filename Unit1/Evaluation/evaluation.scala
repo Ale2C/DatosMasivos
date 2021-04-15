@@ -23,3 +23,37 @@ df.describe().show
 val df2 = df.withColumn("HV Ratio",df("High")/df("Volume"))
 
 df2.select("HIGH","VOLUME","HV RATIO").show()
+
+// 8-. Which day had the highest peak in the “Close” column?
+
+df.select("Date", "Close").sort(desc("Close")).show(1)
+
+// 9.- Write in your own words in a comment of your code. What is the meaning of the Close column "Close"? 
+
+//Looking at the content of the DataFrame, we find that the values refer to Netflix stocks. 
+//The Close column refers to the last value of the day of these stocks in question. 
+//With contrast this Open which are the ones with which the day begins. 
+
+// 10.- What is the maximum and minimum of the “Volume” column?
+
+df.select(max("Volume")).show()
+
+// 11.- With Scala / Spark $ syntax answer the following: 
+
+// a. How many days was the “Close” column less than $ 600?
+
+// b. What percentage of the time was the “High” column greater than $ 500? 
+
+// c. What is the Pearson correlation between column "High" and column "Volume"? 
+df.select(corr("High", "Volume")).show()
+
+// d. What is the maximum in the “High” column per year? 
+val df2 = df.withColumn("Year", year(df("Date")))
+val df3 = df2.select($"Year", $"High").groupBy("Year").max()
+df3.select($"Year", $"max(High)").show()
+
+
+// e. What is the “Close” column average for each calendar month?
+val df2 = df.withColumn("Year", year(df("Date")))
+val df3 = df2.select($"Year", $"High").groupBy("Year").max()
+df3.select($"Year", $"max(High)").show()
