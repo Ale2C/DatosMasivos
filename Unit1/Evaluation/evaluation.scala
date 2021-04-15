@@ -13,3 +13,6 @@ scala> df.columns
 // 4- How is the scheme?
 df.printSchema
 
+// 5.- Print the first 5 columns.
+df.head(5)
+
