@@ -148,5 +148,54 @@ df2.select("HIGH","VOLUME","HV RATIO").show()
 |         78.999999| 34729100|2.274749388841058...|
 +------------------+---------+--------------------+
 ``` 
+## 8-. Which day had the highest peak in the “Close” column?
+<div align="Justify">
+In order for us to display the Date column we need to use the Select method.
+We will have to indicate the columns that we want to show in this case Date and Close, order them from bottom to top specifying the Close column 
+</div>
+``` scala
+ndf.select("Date", "Close").sort(desc("Close")).show(1)
+
+## Terminal
++-------------------+----------+
+|               Date|     Close|
++-------------------+----------+
+|2015-07-13 00:00:00|707.610001|
++-------------------+----------+
+only showing top 1 row
+```
+
+## 9.- Escribe con tus propias palabras en un comentario de tu codigo. ¿Cuál es el significado de la columna Cerrar “Close”?
+
+``` scala
+//Looking at the content of the DataFrame, we find that the values refer to Netflix stocks. 
+//The Close column refers to the last value of the day of these stocks in question. 
+//With contrast this Open which are the ones with which the day begins. 
+```
+## 10.- What is the maximum and minimum of the “Volume” column?
+
+To show the maximum and minimum we need to use Select (max ()) and Select (min ()) and of course the show function to show the resulting table
+
+``` scala 
+df.select(max("Volume")).show()
+
+## Terminal
++-----------+
+|max(Volume)|
++-----------+
+|  315541800|
++-----------+
+
+df.select(min("Volume")).show()
 
 
+## Terminal 
++-----------+
+|min(Volume)|
++-----------+
+|    3531300|
++-----------+
+```
+## 11.- With Scala / Spark $ syntax answer the following: 
+
+a. ¿Cuántos días fue la columna “Close” inferior a $ 600?
