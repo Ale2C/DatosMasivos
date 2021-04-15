@@ -206,6 +206,14 @@ val dias = df.filter($"Close" < 600).count()
 dias: Long = 1218
 ```
 
+b. What percentage of the time was the “High” column greater than $ 500? 
+``` scala
+df.filter($"High" > 500).count()*1.0/df.count*100
+
+## Terminal 
+Double = 4.924543288324067
+```
+
 c. What is the Pearson correlation between column "High" and column "Volume"? 
 ``` scala
 df.select(corr("High", "Volume")).show()
