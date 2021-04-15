@@ -199,3 +199,10 @@ df.select(min("Volume")).show()
 ## 11.- With Scala / Spark $ syntax answer the following: 
 
 a. ¿Cuántos días fue la columna “Close” inferior a $ 600?
+``` scala
+val dias = df.filter($"Close" < 600).count()
+
+## Terminal 
+dias: Long = 1218
+```
+
