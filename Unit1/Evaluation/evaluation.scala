@@ -18,3 +18,8 @@ df.head(5)
 
 // 6.- Use describe () to learn about the DataFrama.
 df.describe().show
+
+// 7.- Create a new dataframe with a new column called "HV Ratio" what is the relationship between the price of the column "High" versus the "Volume" column of shares traded for a day (Hint: It is a column operation)
+val df2 = df.withColumn("HV Ratio",df("High")/df("Volume"))
+
+df2.select("HIGH","VOLUME","HV RATIO").show()
