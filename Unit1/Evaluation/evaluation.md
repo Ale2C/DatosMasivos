@@ -46,3 +46,23 @@ df.columns
 ## Terminal
 res0: Array[String] = Array(Date, Open, High, Low, Close, Volume, Adj Close)
 ``` 
+
+
+## 4- How is the scheme?
+<div align="Justify">
+Using the function printSchema it shows us the name of the columns and the data type
+</div>
+
+``` scala
+df.printSchema
+
+## Terminal
+root
+ |-- Date: timestamp (nullable = true)
+ |-- Open: double (nullable = true)
+ |-- High: double (nullable = true)
+ |-- Low: double (nullable = true)
+ |-- Close: double (nullable = true)
+ |-- Volume: integer (nullable = true)
+ |-- Adj Close: double (nullable = true)
+``` 
