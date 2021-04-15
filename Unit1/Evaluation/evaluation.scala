@@ -41,7 +41,7 @@ df.select(max("Volume")).show()
 // 11.- With Scala / Spark $ syntax answer the following: 
 
 // a. How many days was the “Close” column less than $ 600?
-val dias = df.filter($"Close" < 600).count()
+val dias = df.filter($"Close" < 600).count() 
 
 // b. What percentage of the time was the “High” column greater than $ 500? 
 

@@ -210,7 +210,7 @@ dias: Long = 1218
 =======
 a. How many days was the “Close” column less than $ 600?
 ``` scala
-val dias = df.filter($"Close" < 600).count()
+val dias = df.filter($"Close" < 600).count() 
 
 ## Terminal 
 dias: Long = 1218
