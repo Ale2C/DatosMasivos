@@ -165,7 +165,7 @@ ndf.select("Date", "Close").sort(desc("Close")).show(1)
 only showing top 1 row
 ```
 
-## 9.- Escribe con tus propias palabras en un comentario de tu codigo. ¿Cuál es el significado de la columna Cerrar “Close”?
+## 9.- Write in your own words in a comment of your code. What is the meaning of the Close column "Close"? 
 
 ``` scala
 //Looking at the content of the DataFrame, we find that the values refer to Netflix stocks. 
@@ -198,6 +198,7 @@ df.select(min("Volume")).show()
 ```
 ## 11.- With Scala / Spark $ syntax answer the following: 
 
+<<<<<<< HEAD
 a. ¿Cuántos días fue la columna “Close” inferior a $ 600?
 ``` scala
 val dias = df.filter($"Close" < 600).count()
@@ -206,3 +207,94 @@ val dias = df.filter($"Close" < 600).count()
 dias: Long = 1218
 ```
 
+=======
+a. How many days was the “Close” column less than $ 600?
+``` scala
+val dias = df.filter($"Close" < 600).count()
+
+## Terminal 
+dias: Long = 1218
+```
+
+c. What is the Pearson correlation between column "High" and column "Volume"? 
+``` scala
+df.select(corr("High", "Volume")).show()
+
+## Terminal 
++--------------------+
+|  corr(High, Volume)|
++--------------------+
+|-0.20960233287942157|
++--------------------+
+```
+
+d. What is the maximum in the “High” column per year? 
+``` scala
+scala> val df2 = df.withColumn("Year", year(df("Date")))
+df2: org.apache.spark.sql.DataFrame = [Date: timestamp, Open: double ... 6 more fields]
+
+scala> val df3 = df2.select($"Year", $"High").groupBy("Year").max()
+df3: org.apache.spark.sql.DataFrame = [Year: int, max(Year): int ... 1 more field]
+
+scala> df3.select($"Year", $"max(High)").show()
+
+## Terminal
++----+------------------+                                                       
+|Year|         max(High)|
++----+------------------+
+|2015|        716.159996|
+|2013|        389.159988|
+|2014|        489.290024|
+|2012|        133.429996|
+|2016|129.28999299999998|
+|2011|120.28000300000001|
++----+------------------+
+```
+
+e. What is the “Close” column average for each calendar month?
+
+``` scala 
+scala> val df2 = df.withColumn("Year", year(df("Date")))
+df2: org.apache.spark.sql.DataFrame = [Date: timestamp, Open: double ... 6 more fields]
+
+scala> val df3 = df2.select($"Year", $"High").groupBy("Year").max()
+df3: org.apache.spark.sql.DataFrame = [Year: int, max(Year): int ... 1 more field]
+
+scala> df3.select($"Year", $"max(High)").show()
++----+------------------+                                                       
+|Year|         max(High)|
++----+------------------+
+|2015|        716.159996|
+|2013|        389.159988|
+|2014|        489.290024|
+|2012|        133.429996|
+|2016|129.28999299999998|
+|2011|120.28000300000001|
++----+------------------+
+
+
+scala> val df2 = df.withColumn("Month", month(df("Date")))
+df2: org.apache.spark.sql.DataFrame = [Date: timestamp, Open: double ... 6 more fields]
+
+scala> val df3 = df2.select($"Month", $"Close").groupBy("Month").mean()
+df3: org.apache.spark.sql.DataFrame = [Month: int, avg(Month): double ... 1 more field]
+
+scala> df3.select($"Month", $"avg(Close)").show()
++-----+------------------+                                                      
+|Month|        avg(Close)|
++-----+------------------+
+|   12| 199.3700942358491|
+|    1|212.22613874257422|
+|    6| 295.1597153490566|
+|    3| 249.5825228971963|
+|    5|264.37037614150944|
+|    9|206.09598121568627|
+|    4|246.97514271428562|
+|    8|195.25599892727263|
+|    7|243.64747528037387|
+|   10|205.93297300900903|
+|   11| 194.3172275445545|
+|    2| 254.1954634020619|
++-----+------------------+
+```
+>>>>>>> ace26828715e6d7c39154fc8aac13049f1333be1
