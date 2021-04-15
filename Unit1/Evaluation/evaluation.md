@@ -107,6 +107,7 @@ df.describe().show
 <div align="Justify">
 First create the dataframe df2 from the dataframa df and the calculate the ratio of HIGH and Volume with a division 
 </div>
+
 ``` scala
 val df2 = df.withColumn("HV Ratio",df("High")/df("Volume"))
 ``` 
@@ -115,6 +116,7 @@ val df2 = df.withColumn("HV Ratio",df("High")/df("Volume"))
 <div align="Justify">
 Now that we have a new dataframe, we use the function select and type the column HIGH, VOLUME and HV RATIO, so we can see the columns that are needed
 </div>
+
 ``` scala
 df2.select("HIGH","VOLUME","HV RATIO").show()
 ``` 
