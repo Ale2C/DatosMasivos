@@ -252,25 +252,6 @@ scala> df3.select($"Year", $"max(High)").show()
 e. What is the “Close” column average for each calendar month?
 
 ``` scala 
-scala> val df2 = df.withColumn("Year", year(df("Date")))
-df2: org.apache.spark.sql.DataFrame = [Date: timestamp, Open: double ... 6 more fields]
-
-scala> val df3 = df2.select($"Year", $"High").groupBy("Year").max()
-df3: org.apache.spark.sql.DataFrame = [Year: int, max(Year): int ... 1 more field]
-
-scala> df3.select($"Year", $"max(High)").show()
-+----+------------------+                                                       
-|Year|         max(High)|
-+----+------------------+
-|2015|        716.159996|
-|2013|        389.159988|
-|2014|        489.290024|
-|2012|        133.429996|
-|2016|129.28999299999998|
-|2011|120.28000300000001|
-+----+------------------+
-
-
 scala> val df2 = df.withColumn("Month", month(df("Date")))
 df2: org.apache.spark.sql.DataFrame = [Date: timestamp, Open: double ... 6 more fields]
 
