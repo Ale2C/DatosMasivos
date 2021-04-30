@@ -31,3 +31,41 @@ val Row(coeff2: Matrix) = Correlation.corr(df, "features", "spearman").head
 println(s"Spearman correlation matrix:\n $coeff2")
 
 ```
+## Hypothesis testing
+
+### ChiSquareTest
+The following libraries are loaded to apply methods to vectors and also to perform the necessary calculations in this exercise
+``` scala
+import org.apache.spark.ml.linalg.{Vector, Vectors}
+import org.apache.spark.ml.stat.ChiSquareTest
+
+```
+The sequence of dense vectors
+
+``` scala
+val data = Seq(
+  (0.0, Vectors.dense(0.5, 10.0)),
+  (0.0, Vectors.dense(1.5, 20.0)),
+  (1.0, Vectors.dense(1.5, 30.0)),
+  (0.0, Vectors.dense(3.5, 30.0)),
+  (0.0, Vectors.dense(3.5, 40.0)),
+  (1.0, Vectors.dense(3.5, 40.0))
+)
+```
+- We create a new dataframe based on the vectors we loaded previously 
+- The first values are taken from the previously created dataframe
+<br>
+- Starting with the parts of the test, the values of p 
+- Then we look for the degrees of freedom of the model.
+- Finally, certain values will be extracted from a given vector, all based on the chi-square function.
+
+``` scala
+val df = data.toDF("label", "features")
+val chi = ChiSquareTest.test(df, "features", "label").head
+
+println(s"pValues = ${chi.getAs[Vector](0)}")
+
+println(s"degreesOfFreedom ${chi.getSeq[Int](1).mkString("[", ",", "]")}")
+
+println(s"statistics ${chi.getAs[Vector](2)}")
+```
