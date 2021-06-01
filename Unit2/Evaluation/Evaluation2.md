@@ -136,11 +136,30 @@ val assembler = new VectorAssembler() .setInputCols(Array("sepal_length", "sepal
 val features = assembler.transform(data)
 features.show(5)
 
+## Terminal
+scala> features.show(5)
++------------+-----------+------------+-----------+-------+-----------------+
+|sepal_length|sepal_width|petal_length|petal_width|species|         features|
++------------+-----------+------------+-----------+-------+-----------------+
+|         5.1|        3.5|         1.4|        0.2| setosa|[5.1,3.5,1.4,0.2]|
+|         4.9|        3.0|         1.4|        0.2| setosa|[4.9,3.0,1.4,0.2]|
+|         4.7|        3.2|         1.3|        0.2| setosa|[4.7,3.2,1.3,0.2]|
+|         4.6|        3.1|         1.5|        0.2| setosa|[4.6,3.1,1.5,0.2]|
+|         5.0|        3.6|         1.4|        0.2| setosa|[5.0,3.6,1.4,0.2]|
++------------+-----------+------------+-----------+-------+-----------------+
+only showing top 5 rows
+
+
 val labelIndexer = new StringIndexer().setInputCol("species").setOutputCol("indexedLabel").fit(features)
 println(s"Found labels: ${labelIndexer.labels.mkString("[", ", ", "]")}")
 
+## Terminal
+scala> println(s"Found labels: ${labelIndexer.labels.mkString("[", ", ", "]")}")
+Found labels: [versicolor, virginica, setosa]
+
 val featureIndexer = new VectorIndexer().setInputCol("features").setOutputCol("indexedFeatures").setMaxCategories(4).fit(features)
 ```
+
 
 ## 7.- Build the classification model and explain its architecture.
 
@@ -202,6 +221,20 @@ Make predictions.
 ``` scala 
 val predictions = model.transform(testData)
 predictions.show(5)
+## Terminal
+scala> predictions.show(5)
++------------+-----------+------------+-----------+-------+-----------------+------------+-----------------+--------------------+--------------------+----------+--------------+
+|sepal_length|sepal_width|petal_length|petal_width|species|         features|indexedLabel|  indexedFeatures|       rawPrediction|         probability|prediction|predictedLabel|
++------------+-----------+------------+-----------+-------+-----------------+------------+-----------------+--------------------+--------------------+----------+--------------+
+|         4.4|        2.9|         1.4|        0.2| setosa|[4.4,2.9,1.4,0.2]|         2.0|[4.4,2.9,1.4,0.2]|[8.18713671257018...|[3.84498312790351...|       2.0|        setosa|
+|         4.6|        3.1|         1.5|        0.2| setosa|[4.6,3.1,1.5,0.2]|         2.0|[4.6,3.1,1.5,0.2]|[8.18713671257018...|[3.84498312790351...|       2.0|        setosa|
+|         4.6|        3.2|         1.4|        0.2| setosa|[4.6,3.2,1.4,0.2]|         2.0|[4.6,3.2,1.4,0.2]|[8.18713671257018...|[3.84498312790351...|       2.0|        setosa|
+|         4.6|        3.6|         1.0|        0.2| setosa|[4.6,3.6,1.0,0.2]|         2.0|[4.6,3.6,1.0,0.2]|[8.18713671257018...|[3.84498312790351...|       2.0|        setosa|
+|         4.7|        3.2|         1.3|        0.2| setosa|[4.7,3.2,1.3,0.2]|         2.0|[4.7,3.2,1.3,0.2]|[8.18713671257018...|[3.84498312790351...|       2.0|        setosa|
++------------+-----------+------------+-----------+-------+-----------------+------------+-----------------+--------------------+--------------------+----------+--------------+
+only showing top 5 rows
+
+
 ``` 
 
 <div align="Justify">
@@ -211,11 +244,18 @@ Select (prediction, true label) and calculate the error of the test.
 ``` scala 
 val evaluator = new MulticlassClassificationEvaluator().setLabelCol("indexedLabel").setPredictionCol("prediction").setMetricName("accuracy")
 val accuracy = evaluator.evaluate(predictions)
+## Terminal
+scala> val accuracy = evaluator.evaluate(predictions)
+accuracy: Double = 0.9333333333333333
 ``` 
 
 ## 8.- Print the model results
 
 ``` scala 
 println("Test Error = " + (1.0 - accuracy))
+
+## Terminal 
+scala> println("Test Error = " + (1.0 - accuracy))
+Test Error = 0.06666666666666665
 ``` 
 
