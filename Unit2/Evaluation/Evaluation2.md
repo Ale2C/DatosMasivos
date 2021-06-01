@@ -7,6 +7,7 @@
 First we need the necesary libraries, for this case we will use speciality use MultilayerPerceptronClassifier
 and MulticlassClassificationEvaluator because of this problem focus on the algorithm multilayer perceptron classifier. 
 </div>
+
 ``` scala 
 import org.apache.spark.ml.classification.MultilayerPerceptronClassifier
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
@@ -15,6 +16,7 @@ import org.apache.spark.ml.feature.{IndexToString, StringIndexer, VectorIndexer}
 import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.ml.feature.StringIndexer
 import org.apache.spark.ml.Pipeline
+
 
 ## Terminal
 spark: import org.apache.spark.ml.classification.MultilayerPerceptronClassifier
@@ -30,10 +32,11 @@ spark: import org.apache.spark.ml.Pipeline
 <div align="Justify">
 We use spark.read.option code to load the iris.csv file and aply the following questions
 </div>
+
 ``` scala 
 val data = spark.read.option("header", "true").option("inferSchema","true")csv("iris.csv")
 
-## Terminal
+Terminal
 data: org.apache.spark.sql.DataFrame = [sepal_length: double, sepal_width: double ... 3 more fields]
 ```
 
@@ -41,6 +44,7 @@ data: org.apache.spark.sql.DataFrame = [sepal_length: double, sepal_width: doubl
 <div align="Justify">
 Using the value data we use the command columns to show the name of all the columns in the iris.csv file
 </div>
+
 ``` scala 
 data.columns 
 
@@ -109,6 +113,7 @@ only showing top 20 rows
 Using both the describe() and show() commands allows us to see the data in a more detail way to see the data of
 iris.csv file 
 </div>
+
 ``` scala 
 data.describe().show()
 
