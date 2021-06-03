@@ -9,3 +9,6 @@
 - [Practice #4](https://github.com/Ale2C/DatosMasivos/blob/Unidad2/Unit2/Practices/Practice4/Practice4.md)
 
 ***
+- [Practice #6](https://github.com/Ale2C/DatosMasivos/blob/Unidad2/Unit2/Practices/Practice6/Practice6.md)
+
+***
