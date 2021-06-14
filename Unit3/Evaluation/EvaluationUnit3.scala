@@ -13,10 +13,11 @@ import org.apache.spark.ml.clustering.KMeans
 import org.apache.spark.ml.evaluation.ClusteringEvaluator
 
 //5. Load the Wholesale Customers Data dataset
-val ds = spark.read.option("header", "true").option("inferSchema","true")csv("Wholesale customers data.csv")
+val ds = spark.read.option("header", "true").option("inferSchema","true")csv("Wholesale-customers-data.csv")
 
 //6. Select the following columns: Fresh, Milk, Grocery, Frozen, Detergents_Paper, Delicassen and call this set feature_data
-val feature_data = ds.select("Fresh", "Milk", "Grocery", "Frozen", "Detergents_Paper", "Delicassen").show()
+val feature_data = ds.select("Fresh", "Milk", "Grocery", "Frozen", "Detergents_Paper", "Delicassen")
+feature_data.show()
 
 //7. Import Vector Assembler and Vector
 import org.apache.spark.ml.feature.VectorAssembler
@@ -28,7 +29,7 @@ val assembler = (new VectorAssembler().setInputCols(Array("Fresh","Milk", "Groce
 val features = assembler.transform(feature_data)
 
 //10.Create a Kmeans model with K = 3
-val kmeans = new KMeans().setK(3).setMaxIterations(10)
+val kmeans = new KMeans().setK(3).setSeed(1L)
 val model = kmeans.fit(features)
 
 //11.Evaluate the groups using Within Set Sum of Squared Errors WSSSE and print the centroids.
