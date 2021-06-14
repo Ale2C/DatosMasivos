@@ -2,6 +2,8 @@
 import org.apache.spark.sql.SparkSession
 
 //2. Use the lines of code to minimize errors
+import org.apache.log4j._
+Logger.getLogger("org").setLevel(Level.ERROR)
 
 //3. Create an instance of the Spark session
 val spark1 = SparkSession.builder().getOrCreate()
@@ -26,5 +28,12 @@ val assembler = (new VectorAssembler().setInputCols(Array("Fresh","Milk", "Groce
 val features = assembler.transform(feature_data)
 
 //10.Create a Kmeans model with K = 3
+val kmeans = new KMeans().setK(3).setMaxIterations(10)
+val model = kmeans.fit(features)
 
 //11.Evaluate the groups using Within Set Sum of Squared Errors WSSSE and print the centroids.
+val WSSSE = model.computeCost(features)
+println(s"Within set sum of Squared Errors = $WSSSE")
+
+println("Cluster Centers: ")
+model.clusterCenters.foreach(println)
