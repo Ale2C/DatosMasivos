@@ -5,10 +5,6 @@ import org.apache.spark.ml.feature.{VectorAssembler, StringIndexer, VectorIndexe
 import org.apache.spark.ml.linalg.Vectors
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
 
-// Errors are minimized
-import org.apache.log4j._
-Logger.getLogger("org").setLevel(Level.ERROR)
-
 // Spark session is created
 val spark = SparkSession.builder().getOrCreate()
 
