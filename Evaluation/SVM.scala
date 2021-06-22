@@ -1,35 +1,69 @@
+// SVM (Support Vector Machines)
+
 //Import the necesary libraries
-import org.apache.spark.mllib.classification.{SVMModel, SVMWithSGD}
-import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
-import org.apache.spark.mllib.util.MLUtils
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.ml.classification.LinearSVC
+import org.apache.spark.mllib.evaluation.MulticlassMetrics
+import org.apache.spark.ml.linalg.Vectors
+import org.apache.spark.ml.feature.StringIndexer
+import org.apache.spark.ml.feature.VectorIndexer
+import org.apache.spark.ml.feature.VectorAssembler
+import org.apache.spark.ml.Pipeline
 
-// Load training data in LIBSVM format.
-val data = MLUtils.loadLibSVMFile(sc, "data/mllib/sample_libsvm_data.txt")
+//Minimize errors
+import org.apache.log4j._
+Logger.getLogger("org").setLevel(Level.ERROR)
 
-// Split data into training (60%) and test (40%).
-val splits = data.randomSplit(Array(0.6, 0.4), seed = 11L)
-val training = splits(0).cache()
-val test = splits(1)
+//Spark session.
+val spark = SparkSession.builder.appName("svm").getOrCreate()
 
-// Run training algorithm to build the model
-val numIterations = 100
-val model = SVMWithSGD.train(training, numIterations)
+//Load the bank-full.csv dataset
+val df  = spark.read.option("header","true").option("inferSchema", "true").option("delimiter",";").format("csv").load("bank-full.csv")
+df.head()
+df.describe()
 
-// Clear the default threshold.
-model.clearThreshold()
+//Index column "y"
+val labelIndexer = new StringIndexer().setInputCol("y").setOutputCol("indexedY").fit(df)
+val indexed = labelIndexer.transform(df).drop("y").withColumnRenamed("indexedY", "label")
 
-// Compute raw scores on the test set.
-val scoreAndLabels = test.map { point =>
-  val score = model.predict(point.features)
-  (score, point.label)
-}
+//Create a vector with the columns with numerical data and name it as features
+val vectorFeatures = (new VectorAssembler().setInputCols(Array("balance","day","duration","pdays","previous")).setOutputCol("features"))
 
-// Get evaluation metrics.
-val metrics = new BinaryClassificationMetrics(scoreAndLabels)
-val auROC = metrics.areaUnderROC()
+//Use the assembler object to transform features
+val featurestrans = vectorFeatures.transform(indexed)
 
-println(s"Area under ROC = $auROC")
+//Rename column "y" as label
+val featureslabel = featurestrans.withColumnRenamed("y", "label")
 
-// Save and load model
-model.save(sc, "target/tmp/scalaSVMWithSGDModel")
-val sameModel = SVMModel.load(sc, "target/tmp/scalaSVMWithSGDModel")
+//Union of label and features as dataIndexed.
+val dataindexed = featureslabel.select("label","features")
+dataindexed.show()
+
+//Creation of labelIndexer and featureIndexer for the pipeline, Where features with distinct values > 4, are treated as continuous.
+val labelindexer = new StringIndexer().setInputCol("label").setOutputCol("indexedlabel").fit(dataindexed)
+val featureIndexer = new VectorIndexer().setInputCol("features").setOutputCol("indexedfeatures").setMaxCategories(4).fit(dataindexed)
+
+//Training data as 70% and test data as 30%.
+val Array(training, test) = dataindexed.randomSplit(Array(0.7, 0.3), seed = 1234L)
+
+//Linear Support Vector Machine object.
+val supportVM = new LinearSVC().setMaxIter(10).setRegParam(0.1)
+    
+//Fitting the trainingData into the model.
+val modelSVM = supportVM.fit(training)
+
+//Transforming testData for the predictions.
+val predictions = modelSVM.transform(test)
+predictions.show()
+
+//Obtaining the metrics.
+val predictionAndLabels = predictions.select($"prediction",$"label").as[(Double, Double)].rdd
+val metrics = new MulticlassMetrics(predictionAndLabels)
+
+//Confusion matrix.
+println("Confusion matrix:")
+println(metrics.confusionMatrix)
+
+//Accuracy and Test Error.
+println("Accuracy: " + metrics.accuracy) 
+println(s"Test Error = ${(1.0 - metrics.accuracy)}")

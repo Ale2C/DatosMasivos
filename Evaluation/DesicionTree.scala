@@ -1,46 +1,53 @@
+// Decision Tree
+
 //Import the necesary libraries
-import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.DecisionTreeClassificationModel
 import org.apache.spark.ml.classification.DecisionTreeClassifier
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 import org.apache.spark.ml.feature.{IndexToString, StringIndexer, VectorIndexer}
+import org.apache.spark.ml.feature.VectorAssembler
+import org.apache.spark.ml.linalg.Vectors
+import org.apache.spark.ml.feature.StringIndexer 
+import org.apache.spark.ml.Pipeline
 
-// Load the data stored in LIBSVM format as a DataFrame.
-val data = spark.read.format("libsvm").load("data/mllib/sample_libsvm_data.txt")
+//Minimize errors
+import org.apache.log4j._
+Logger.getLogger("org").setLevel(Level.ERROR)
 
-// Index labels, adding metadata to the label column.
-// Fit on whole dataset to include all labels in index.
-val labelIndexer = new StringIndexer()
-  .setInputCol("label")
-  .setOutputCol("indexedLabel")
-  .fit(data)
-  
-// Automatically identify categorical features, and index them.
-val featureIndexer = new VectorIndexer()
-  .setInputCol("features")
-  .setOutputCol("indexedFeatures")
-  .setMaxCategories(4) // features with > 4 distinct values are treated as continuous.
-  .fit(data)
+////Spark session.
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder().getOrCreate()
 
-// Split the data into training and test sets (30% held out for testing).
-val Array(trainingData, testData) = data.randomSplit(Array(0.7, 0.3))
+//Load the bank-full.csv dataset
+val dataframe = spark.read.option("header","true").option("inferSchema","true").option("delimiter",";").format("csv").load("bank-full.csv")
+dataframe.head()
+dataframe.describe()
 
-// Train a DecisionTree model.
-val dt = new DecisionTreeClassifier()
-  .setLabelCol("indexedLabel")
-  .setFeaturesCol("indexedFeatures")
+//Transform categorical data to numeric
+val stringindexer = new StringIndexer().setInputCol("y").setOutputCol("label")
+val df = stringindexer.fit(dataframe).transform(dataframe)
+
+//Create a vector with the columns with numerical data and name it as features
+val assembler = new VectorAssembler().setInputCols(Array("balance","day","duration","campaign","pdays","previous")).setOutputCol("features")
+val output = assembler.transform(df)
+
+//Use the assembler object to transform features
+val labelIndexer = new StringIndexer().setInputCol("label").setOutputCol("indexedLabel").fit(output)
+val featureIndexer = new VectorIndexer().setInputCol("features").setOutputCol("indexedFeatures").setMaxCategories(4).fit(output)
+
+//Training data as 70% and test data as 30%.
+val Array(trainingData, testData) = output.randomSplit(Array(0.7, 0.3), seed = 1234L)
+
+// Train a model.
+val dt = new DecisionTreeClassifier().setLabelCol("indexedLabel").setFeaturesCol("indexedFeatures")
 
 // Convert indexed labels back to original labels.
-val labelConverter = new IndexToString()
-  .setInputCol("prediction")
-  .setOutputCol("predictedLabel")
-  .setLabels(labelIndexer.labelsArray(0))
+val labelConverter = new IndexToString().setInputCol("prediction").setOutputCol("predictedLabel").setLabels(labelIndexer.labels)
 
 // Chain indexers and tree in a Pipeline.
-val pipeline = new Pipeline()
-  .setStages(Array(labelIndexer, featureIndexer, dt, labelConverter))
+val pipeline = new Pipeline().setStages(Array(labelIndexer, featureIndexer, dt, labelConverter))
 
-// Train model. This also runs the indexers.
+// Train model.
 val model = pipeline.fit(trainingData)
 
 // Make predictions.
@@ -50,9 +57,7 @@ val predictions = model.transform(testData)
 predictions.select("predictedLabel", "label", "features").show(5)
 
 // Select (prediction, true label) and compute test error.
-val evaluator = new MulticlassClassificationEvaluator()
-  .setLabelCol("indexedLabel")
-  .setPredictionCol("prediction")
-  .setMetricName("accuracy")
+val evaluator = new MulticlassClassificationEvaluator().setLabelCol("indexedLabel").setPredictionCol("prediction").setMetricName("accuracy")
+
 val accuracy = evaluator.evaluate(predictions)
 println(s"Test Error = ${(1.0 - accuracy)}")
