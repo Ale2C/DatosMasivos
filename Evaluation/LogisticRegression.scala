@@ -1,3 +1,6 @@
+//Start timer
+val startTimeMillis = System.currentTimeMillis()
+
 // Import the libraries
 import org.apache.spark.ml.classification.LogisticRegression
 import org.apache.spark.sql.SparkSession
@@ -48,3 +51,9 @@ println(metrics.confusionMatrix)
 // Accuracy and error test is printed
 println("Accuracy: "+metrics.accuracy) 
 println(s"Test Error = ${(1.0 - metrics.accuracy)}")
+
+val endTimeMillis = System.currentTimeMillis()
+val durationSeconds = (endTimeMillis - startTimeMillis) / 1000
+
+//Print the time in seconds that took the whole algorithm to compile
+println(durationSeconds)

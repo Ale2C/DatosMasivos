@@ -1,3 +1,6 @@
+//Start timer
+val startTimeMillis = System.currentTimeMillis()
+
 // Import the libraries
 import org.apache.spark.ml.classification.MultilayerPerceptronClassifier
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
@@ -55,3 +58,10 @@ val evaluator = new MulticlassClassificationEvaluator().setMetricName("accuracy"
 // The model accuracy is printed
 println(s"Test Accuracy = ${evaluator.evaluate(predictionAndLabels)}")
 println(s"Test Error = ${(1.0 - evaluator.evaluate(predictionAndLabels))}")
+
+val endTimeMillis = System.currentTimeMillis()
+val durationSeconds = (endTimeMillis - startTimeMillis) / 1000
+
+//Print the time in seconds that took the whole algorithm to compile
+println(durationSeconds)
+

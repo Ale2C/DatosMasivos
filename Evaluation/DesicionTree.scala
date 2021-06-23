@@ -1,4 +1,6 @@
 // Decision Tree
+//Start timer
+val startTimeMillis = System.currentTimeMillis()
 
 //Import the necesary libraries
 import org.apache.spark.ml.classification.DecisionTreeClassificationModel
@@ -61,3 +63,9 @@ val evaluator = new MulticlassClassificationEvaluator().setLabelCol("indexedLabe
 
 val accuracy = evaluator.evaluate(predictions)
 println(s"Test Error = ${(1.0 - accuracy)}")
+
+val endTimeMillis = System.currentTimeMillis()
+val durationSeconds = (endTimeMillis - startTimeMillis) / 1000
+
+//Print the time in seconds that took the whole algorithm to compile
+println(durationSeconds)
