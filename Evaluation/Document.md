@@ -31,6 +31,7 @@ Reyes Armenta Gerardo Antonio 17211147
 
 
 **MAESTRO**
+
 Christian Romero Hernandez
 
 </div>
